@@ -1,16 +1,29 @@
 <template>
-  <div>
+  <div class="flex-grow">
+    <todos-list-header />
 
-    <div
-      v-for="(todo, i) in todos"
-      :key="`todo-${i}`"
-      class="mx-3 mt-3 max-w-screen-md"
+    <div 
+      v-if=" loaded "
+      class="px-3 md:px-16 overflow-auto" 
+      :style=" listStyle "
     >
-      <todos-list-item 
-        :todo-id='todo.id'
-        :todo-n='i + 1'
-      />
+      <div
+        v-for="(todo, i) in todos"
+        :key="`todo-${i}`"
+        class="mb-3"
+        :class=" i === 0 ? 'mt-3' : '' "
+      >
+        <todos-list-item 
+          :todo-id='todo.id'
+          :todo-n='i + 1'
+        />
+      </div>
     </div>
+
+    <div 
+      v-else 
+      class="ml-3 md:ml-16 mt-4 text-gray-400"
+    >Loading...</div>
 
   </div>
 </template>
@@ -22,8 +35,12 @@ export default {
   computed: {
     ...mapGetters ('todos', {
       todos: 'getTodos',
+      loaded: 'getLoadingCompleted',
     }),
 
+    listStyle () {
+      return `height: calc(100vh - ${this.$store.getters.getHeaderHeight}px - ${this.$store.getters.getTodosHeaderHeight}px);`
+    },
   },
 }
 </script>
