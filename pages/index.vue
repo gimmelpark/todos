@@ -7,9 +7,9 @@
 
 <script>
 export default {
-  created() {
-    if ( !this.$store.getters['todos/getLoadingStarted'] || !this.$store.getters['users/getLoadingStarted']) {
-      this.$store.dispatch('todos/storeInit')
+  async fetch({ store }) {
+    if ( !store.getters['todos/getLoadingStarted'] || !store.getters['users/getLoadingStarted'] ) {
+      await store.dispatch('todos/storeInit')
     }
   }
 }

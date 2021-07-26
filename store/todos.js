@@ -1,6 +1,8 @@
 export const state = () => ({
   todos: [],
+  allTodos: [],
 
+  // достуа=пные типы сортировки
   sortTypes: [
     {
       type: 0,
@@ -15,6 +17,7 @@ export const state = () => ({
       text: 'By status',
     },
   ],
+  // текущая сортировка
   sort: {
     type: 0,
     dir: true,
@@ -30,6 +33,7 @@ export const getters = {
   getTodos: state => state.todos,
   getTodoById: state => id => state.todos.find( el => el.id === id ),
   getTodosByUser: state => userId => state.todos.filter( el => el.userId === userId),
+  getAllTodos: state => state.allTodos,
 
   getSort: state => state.sort,
   getSortTypes: state => state.sortTypes,
@@ -42,6 +46,9 @@ export const getters = {
 export const mutations = {
   setTodos (state, todos) {
     state.todos = todos
+  },
+  setAllTodos (state, todos) {
+    state.allTodos = todos
   },
 
   setSort (state, sort) {
@@ -60,6 +67,7 @@ export const mutations = {
 }
 
 export const actions = {
+  // инициализация хранилища
   async storeInit ( { dispatch, commit } ) {
     try {
       commit ('loadingStart')
@@ -75,36 +83,32 @@ export const actions = {
     }
   },
 
+  // запрос
   async APIgetAllTodos ( { state, dispatch }) {
     const todos = await this.$axios.$get(state.URL)
-    dispatch ('setTodos', todos)
+    dispatch ('setAllTodos', todos)
   },
 
-  async APIgetTodos ( { state, dispatch, rootGetters }) {
-
+  // фильтрует todos по выбранным пользователям
+  filterTodosByUsers ( { state, commit, rootGetters } ) {
     const selectedUsers = rootGetters['users/getSelectedUsers']
-    let todos = []
-    let userTodos = []
-    
-    for (const userId of selectedUsers) {
-      userTodos = await this.$axios.$get(state.URL, { params: { userId } })
-      todos = todos.concat(userTodos)
-    }
-
-    dispatch ('setTodos', todos)
+    const filteredTodos = state.allTodos.filter ( el => selectedUsers.includes(el.userId))
+    commit ('setTodos', filteredTodos)
   },
 
-  setTodos ( { commit, state }, todos) {
+  // записывает все задачи в начале
+  setAllTodos ( { commit, state, dispatch }, todos) {
     const todosUpperCase = todos.map( todo => ({
       ...todo,
       title: todo.title.charAt(0).toUpperCase() + todo.title.substr(1)
     }))
 
-    commit('setTodos', 
-      sortTodos (todosUpperCase, state.sort.type, state.sort.dir)
-    )
+    const sortedTodos = sortTodos (todosUpperCase, state.sort.type, state.sort.dir)
+    commit('setAllTodos', sortedTodos)
+    commit('setTodos', sortedTodos)
   },
 
+  // меняет тип сортировки
   setSortType ( { commit, state }, type) {
     commit ('setSort', {
       type,
@@ -116,6 +120,7 @@ export const actions = {
     )
   },
 
+  // меняет порядок сортировки
   setSortDirection ( { commit, state }, dir) {
     commit ('setSort', {
       type: state.sort.type,
@@ -129,7 +134,7 @@ export const actions = {
 }
 
 
-
+// сортировка
 const sortTodos = function ( todos , type, dir ) {
   let todosSorted = JSON.parse( JSON.stringify(todos) )
 
@@ -150,12 +155,14 @@ const sortTodos = function ( todos , type, dir ) {
   return todosSorted
 }
 
+// сортировка по id
 const sortById = function ( todos, dir ) {
   return dir ? 
     todos.sort( (a, b) => a.id - b.id ) : 
     todos.sort( (a, b) => b.id - a.id )
 }
 
+// сортировка по алфавиту
 const sortByAlph = function ( todos, dir ) {
   const mapped = todos.map( (el, i) => ({
     ind: i,
@@ -174,6 +181,7 @@ const sortByAlph = function ( todos, dir ) {
     mapped.map( el => todos[el.ind] ).reverse()
 }
 
+// по статусу
 const sortByStatus = function ( todos, dir ) {
   const completed = sortById(
     todos.filter( el => el.completed 

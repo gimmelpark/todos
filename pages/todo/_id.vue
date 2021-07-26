@@ -16,16 +16,17 @@ export default {
     return /^\d+$/.test(params.id)
   },
 
+  async fetch ({ store }) {
+    if ( !store.getters['todos/getLoadingStarted'] || !store.getters['users/getLoadingStarted'] ) {
+      await store.dispatch('todos/storeInit')
+    }
+  },
+
   computed: {
     todoId () {
       return parseInt(this.$route.params.id)
     },
   },
 
-  created() {
-    if (!this.$store.getters['todos/getLoadingStarted']) {
-      this.$store.dispatch('todos/storeInit')
-    }
-  },
 }
 </script>

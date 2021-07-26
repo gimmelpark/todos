@@ -26,22 +26,27 @@
 <script>
 export default {
   props: {
+    // заголовок
     title: {
       type: String,
       required: true,
     },
+    // текст
     text: {
       type: String,
       required: true,
     },
+    // цвет текста
     textColor: {
       type: String,
       default: 'gray-600',
     },
+    // если должна быть ссылка
     link: {
       type: Boolean,
       default: false,
     },
+    // куда ведет ссылка
     linkTo: {
       type: Object,
       default () {

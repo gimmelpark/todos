@@ -38,6 +38,7 @@ export default {
       loaded: 'getLoadingCompleted',
     }),
 
+    // высота списка (для фиксации всего кроме списка)
     listStyle () {
       return `height: calc(100vh - ${this.$store.getters.getHeaderHeight}px - ${this.$store.getters.getTodosHeaderHeight}px);`
     },

@@ -52,10 +52,12 @@
 <script>
 export default {
   props: {
+    // текст селекта
     label: {
       type: String,
       default: "Select",
     },
+    // варианты выбора
     items: {
       type: Array,
       default () {

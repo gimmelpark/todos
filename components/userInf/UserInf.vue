@@ -43,6 +43,7 @@ export default {
       return this.$store.getters['users/getUserById'](this.userId)
     },
 
+    // список полей
     infFields () {
       return [
         {
