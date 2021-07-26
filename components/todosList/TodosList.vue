@@ -3,7 +3,6 @@
     <todos-list-header />
 
     <div 
-      v-if=" loaded "
       class="px-3 md:px-16 xl:px-64 2xl:px-72 overflow-auto" 
       :style=" listStyle "
     >
@@ -20,11 +19,6 @@
       </div>
     </div>
 
-    <div 
-      v-else 
-      class="ml-3 md:ml-16 mt-4 text-gray-400"
-    >Loading...</div>
-
   </div>
 </template>
 
@@ -35,7 +29,6 @@ export default {
   computed: {
     ...mapGetters ('todos', {
       todos: 'getTodos',
-      loaded: 'getLoadingCompleted',
     }),
 
     // высота списка (для фиксации всего кроме списка)

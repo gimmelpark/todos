@@ -32,12 +32,15 @@
           </svg>
         </div>
 
-        <NuxtLink
-          :to="{ name: 'user-id', params: { id: todo.userId } }"
-          class="text-gray-600 hover:underline"
-        >
-          {{ userText }}
-        </NuxtLink>
+        <client-only placeholder="Loading...">
+          <NuxtLink
+            :to="{ name: 'user-id', params: { id: todo.userId } }"
+            class="text-gray-600 hover:underline"
+          >
+            {{ userText }}
+          </NuxtLink>
+        </client-only>
+        
       </div>
 
       <div 
