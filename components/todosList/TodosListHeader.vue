@@ -1,6 +1,6 @@
 <template>
-  <div ref="todosHeader" class="h-12 bg-gray-50 shadow">
-
+  <div ref="todosHeader" class="h-12 flex flex-row items-center bg-gray-50 shadow">
+    <todos-sort class="ml-8" />
   </div>
 </template>
 

@@ -8,7 +8,10 @@
         #{{ todoN }}
       </div>
 
-      <div class="ml-4 w-4/5 whitespace-nowrap truncate">
+      <div 
+        class="ml-4 w-4/5 whitespace-nowrap truncate"
+        :title=" todo.title "
+      >
         {{ todo.title }}
       </div>
     </div>

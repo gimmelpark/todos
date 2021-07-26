@@ -10,6 +10,8 @@
 
 <script>
 export default {
+  layout: 'notFixed',
+
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },

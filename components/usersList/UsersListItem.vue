@@ -2,8 +2,8 @@
   <div class="flex flex-row items-center" :class=" userClass ">
     <custom-checkbox
       :checked=" selected "
-      @check=" $store.dispatch('users/selectUser', userId) "
       class="ml-2"
+      @check=" $store.dispatch('users/selectUser', userId) "
     />
 
     <div 

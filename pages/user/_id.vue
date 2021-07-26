@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>  
     <content-header />
 
     <user-inf
@@ -10,6 +10,8 @@
 
 <script>
 export default {
+  layout: 'notFixed',
+
   validate({ params }) {
     return /^\d+$/.test(params.id)
   },

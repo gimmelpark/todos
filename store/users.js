@@ -58,6 +58,7 @@ export const actions = {
     }
     catch (e) {
       commit ('loadingError', e)
+      window.$nuxt.error(e)
     }
     
   },

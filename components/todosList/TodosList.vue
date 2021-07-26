@@ -4,7 +4,7 @@
 
     <div 
       v-if=" loaded "
-      class="px-3 md:px-16 overflow-auto" 
+      class="px-3 md:px-16 xl:px-64 2xl:px-72 overflow-auto" 
       :style=" listStyle "
     >
       <div

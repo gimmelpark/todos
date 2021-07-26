@@ -1,5 +1,7 @@
 export const state = () => ({
+  // высота общего хеадера
   headerHeight: undefined,
+  // высота хеадера списка задач
   todosHeaderHeight: undefined,
 })
 
